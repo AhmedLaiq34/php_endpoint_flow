@@ -4,7 +4,7 @@ include 'conn.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$required = ['project_id', 'assigned_to', 'title'];
+$required = ['project_id', 'assigned_to', 'title', 'assigned_by'];
 foreach ($required as $field) {
     if (empty($data[$field])) {
         echo json_encode(["success" => false, "message" => "$field is required"]);
@@ -14,14 +14,15 @@ foreach ($required as $field) {
 
 $project_id = $data['project_id'];
 $assigned_to = $data['assigned_to'];
+$assigned_by = $data['assigned_by']; // NEW
 $title = $data['title'];
 $description = $data['description'] ?? "";
 $priority = $data['priority'] ?? "medium";
 $deadline = $data['deadline'] ?? NULL;
 
-$stmt = $conn->prepare("INSERT INTO tasks (project_id, assigned_to, title, description, priority, deadline) 
-                        VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("iissss", $project_id, $assigned_to, $title, $description, $priority, $deadline);
+$stmt = $conn->prepare("INSERT INTO tasks (project_id, assigned_to, assigned_by, title, description, priority, deadline) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("iiissss", $project_id, $assigned_to, $assigned_by, $title, $description, $priority, $deadline);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Task created"]);
