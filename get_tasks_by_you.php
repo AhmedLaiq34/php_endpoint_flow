@@ -15,7 +15,7 @@ if ($user_id <= 0) {
 
 // Query tasks assigned by this user
 $sql = "
-    SELECT t.id, t.title, t.description, t.priority, t.status,t.assigned_to , t.assigned_by, p.name as project_name
+    SELECT t.id, t.title, t.description, t.priority, t.status,t.assi:gned_to , t.assigned_by, p.name as project_name
 FROM tasks t
 JOIN projects p ON t.project_id = p.id
 WHERE t.assigned_by = ?
