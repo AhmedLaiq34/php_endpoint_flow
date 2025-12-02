@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'db_connection.php'; // make sure this file connects to your DB
+include 'conn.php'; // make sure this file connects to your DB
 
 // Read JSON input
 $input = json_decode(file_get_contents('php://input'), true);

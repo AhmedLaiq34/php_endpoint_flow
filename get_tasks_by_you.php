@@ -15,7 +15,7 @@ if ($user_id <= 0) {
 
 // Query tasks assigned by this user
 $sql = "
-    SELECT t.id, t.title, t.description, t.priority, t.status,t.assigned_to,t.deadline , t.assigned_by, p.name as project_name
+    SELECT t.id, t.title, t.description,t.completion, t.priority, t.status,t.assigned_to,t.deadline , t.assigned_by, p.name as project_name
 FROM tasks t
 JOIN projects p ON t.project_id = p.id
 WHERE t.assigned_by = ?
@@ -37,6 +37,7 @@ while ($row = $result->fetch_assoc()) {
         "assigned_by" => intval($row['assigned_by']),
         "assigned_to" => intval($row['assigned_to']),
         "deadline"=>$row['deadline'],
+        "completion"=>$row['completion'],
         "project_name" => $row['project_name']
     ];
 }
