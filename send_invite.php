@@ -25,7 +25,25 @@ $stmt = $conn->prepare("INSERT INTO project_invites (project_id, sender_id, rece
 $stmt->bind_param("iii", $projectId, $senderId, $receiverId);
 
 if ($stmt->execute()) {
+
+    // ✅ Only send notification AFTER DB success
+    $notifyUrl = "http://192.168.1.13:3000/send-notification";
+
+    $payload = json_encode([
+        "receiver_id" => $receiverId,
+        "title" => "Project Invite",
+        "body" => "You received a project invite"
+    ]);
+
+    $ch = curl_init($notifyUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload); // ✅ correct spelling
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_exec($ch);
+    curl_close($ch);
+
     echo json_encode(["success" => true, "message" => "Invite sent"]);
+
 } else {
     echo json_encode(["success" => false, "message" => "Failed to send invite"]);
 }
