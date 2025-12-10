@@ -27,7 +27,7 @@ $stmt->bind_param("iii", $projectId, $senderId, $receiverId);
 if ($stmt->execute()) {
 
     // ✅ Only send notification AFTER DB success
-    $notifyUrl = "http://192.168.1.13:3000/send-notification";
+    $notifyUrl = "http://192.168.1.15:3000/send-notification";
 
     $payload = json_encode([
         "receiver_id" => $receiverId,
