@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
+header('Content-Type: application/json');
 include "conn.php";
 
 $currentUserId = isset($_GET['current_user_id']) ? intval($_GET['current_user_id']) : 0;

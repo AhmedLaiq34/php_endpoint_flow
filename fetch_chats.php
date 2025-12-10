@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/json; charset=UTF-8");
+header('Content-Type: application/json');
 include "conn.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
